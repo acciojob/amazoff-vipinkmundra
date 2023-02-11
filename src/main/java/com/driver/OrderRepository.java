@@ -68,9 +68,9 @@ public class OrderRepository {
         List<String> ans = new ArrayList<>();
         if(orderPartnerPair.containsKey(partnerId)){
             list = orderPartnerPair.get(partnerId);
-        }
-        for(Order order : list){
-            ans.add(order.toString());
+            for(Order order : list){
+                ans.add(order.toString());
+            }
         }
         return ans;
     }
