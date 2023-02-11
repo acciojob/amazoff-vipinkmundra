@@ -10,7 +10,7 @@ import java.util.*;
 public class OrderRepository {
     Map<String,Order> orderMap = new HashMap<>();
     Map<String, DeliveryPartner> deliveryPartnerMap = new HashMap<>();
-    Map<String, List<Order>> orderPartnerPair = new HashMap<>();
+    Map<String, HashSet<Order>> orderPartnerPair = new HashMap<>();
     HashSet<Order> assignedOrder = new HashSet<>();
     public void addOrder(Order order){
         String id = order.getId();
@@ -25,7 +25,7 @@ public class OrderRepository {
             Order order = orderMap.get(orderId);
             if(!assignedOrder.contains(order)){
                 if(orderPartnerPair.containsKey(partnerId)){
-                    List<Order> list = orderPartnerPair.get(partnerId);
+                    HashSet<Order> list = orderPartnerPair.get(partnerId);
                     list.add(order);
                     DeliveryPartner dp = deliveryPartnerMap.get(partnerId);
                     dp.setNumberOfOrders(list.size());
@@ -33,7 +33,7 @@ public class OrderRepository {
                     orderPartnerPair.put(partnerId,list);
                     assignedOrder.add(order);
                 }else{
-                    List<Order> list = new ArrayList<>();
+                    HashSet<Order> list = new HashSet<>();
                     list.add(order);
                     DeliveryPartner dp = deliveryPartnerMap.get(partnerId);
                     dp.setNumberOfOrders(list.size());
@@ -63,7 +63,7 @@ public class OrderRepository {
         return 0;
     }
     public List<String> getOrdersByPartnerId(String partnerId){
-        List<Order> list = new ArrayList<>();
+        HashSet<Order> list = new HashSet<>();
         List<String> ans = new ArrayList<>();
         if(orderPartnerPair.containsKey(partnerId)){
             list = orderPartnerPair.get(partnerId);
@@ -107,7 +107,7 @@ public class OrderRepository {
             orderMap.remove(orderId);
             assignedOrder.remove(order1);
             for(String id : orderPartnerPair.keySet()){
-                List<Order> newOrderList = new ArrayList<>();
+                HashSet<Order> newOrderList = new HashSet<>();
                 for(Order order : orderPartnerPair.get(id)){
                     if(order.equals(order1)){
                         continue;
@@ -133,7 +133,8 @@ public class OrderRepository {
         return count;
     }
     public String getLastDeliveryTimeByPartnerId(String partnerId){
-        List<Order> orders = orderPartnerPair.get(partnerId);
+        HashSet<Order> hs = orderPartnerPair.get(partnerId);
+        List<Order> orders = new ArrayList<>(hs);
         Order order = orders.get(orders.size()-1);
         int time = order.getDeliveryTime();
         int MM = time%60;
