@@ -29,6 +29,7 @@ public class OrderRepository {
                     list.add(orderMap.get(orderId));
                     DeliveryPartner dp = deliveryPartnerMap.get(partnerId);
                     dp.setNumberOfOrders(list.size());
+                    deliveryPartnerMap.put(partnerId,dp);
                     orderPartnerPair.put(partnerId,list);
                     assignedOrder.add(order);
                 }else{
@@ -36,6 +37,7 @@ public class OrderRepository {
                     list.add(orderMap.get(orderId));
                     DeliveryPartner dp = deliveryPartnerMap.get(partnerId);
                     dp.setNumberOfOrders(list.size());
+                    deliveryPartnerMap.put(partnerId,dp);
                     orderPartnerPair.put(partnerId,list);
                     assignedOrder.add(order);
                 }
