@@ -142,7 +142,7 @@ public class OrderRepository {
         if(string2.length() == 1){
             string2 = "0"+string2;
         }
-        String orderTime = string1+":"+string2;
+        String orderTime = string2+":"+string1;
         return orderTime;
     }
 }
