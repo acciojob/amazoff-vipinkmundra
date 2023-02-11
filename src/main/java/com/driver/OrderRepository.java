@@ -14,9 +14,6 @@ public class OrderRepository {
     HashSet<Order> assignedOrder = new HashSet<>();
     public void addOrder(Order order){
         String id = order.getId();
-//        if(orderMap.containsKey(id)){
-//
-//        }
         orderMap.put(id,order);
     }
     public void addPartner(String partnerId){
@@ -57,7 +54,7 @@ public class OrderRepository {
         }
         return null;
     }
-    public int getOrderCountByPartnerId(String partnerId){
+    public Integer getOrderCountByPartnerId(String partnerId){
         if(orderPartnerPair.containsKey(partnerId)){
             return orderPartnerPair.get(partnerId).size();
         }
@@ -85,7 +82,10 @@ public class OrderRepository {
         }
         return ans;
     }
-    public int getCountOfUnassignedOrders(){
+    public Integer getCountOfUnassignedOrders(){
+        if(orderMap.size() == 0){
+            return 0;
+        }
         return orderMap.size() - assignedOrder.size();
     }
     public void deletePartnerById(String partnerId){
@@ -116,7 +116,7 @@ public class OrderRepository {
             }
         }
     }
-    public int getOrdersLeftAfterGivenTimeByPartnerId(String time,String partnerId){
+    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time,String partnerId){
         int count = 0;
         String hour = time.substring(0,2);
         String min = time.substring(3);
