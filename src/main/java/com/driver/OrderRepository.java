@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
-@Repository
+//@Repository
 public class OrderRepository {
     Map<String,Order> orderMap = new HashMap<>();
     Map<String, DeliveryPartner> deliveryPartnerMap = new HashMap<>();
@@ -14,6 +14,9 @@ public class OrderRepository {
     HashSet<Order> assignedOrder = new HashSet<>();
     public void addOrder(Order order){
         String id = order.getId();
+//        if(orderMap.containsKey(id)){
+//
+//        }
         orderMap.put(id,order);
     }
     public void addPartner(String partnerId){
@@ -56,7 +59,7 @@ public class OrderRepository {
     }
     public int getOrderCountByPartnerId(String partnerId){
         if(orderPartnerPair.containsKey(partnerId)){
-            return orderPartnerPair.size();
+            return orderPartnerPair.get(partnerId).size();
         }
         return 0;
     }
