@@ -27,11 +27,15 @@ public class OrderRepository {
                 if(orderPartnerPair.containsKey(partnerId)){
                     List<Order> list = orderPartnerPair.get(partnerId);
                     list.add(orderMap.get(orderId));
+                    DeliveryPartner dp = deliveryPartnerMap.get(partnerId);
+                    dp.setNumberOfOrders(list.size());
                     orderPartnerPair.put(partnerId,list);
                     assignedOrder.add(order);
                 }else{
                     List<Order> list = new ArrayList<>();
                     list.add(orderMap.get(orderId));
+                    DeliveryPartner dp = deliveryPartnerMap.get(partnerId);
+                    dp.setNumberOfOrders(list.size());
                     orderPartnerPair.put(partnerId,list);
                     assignedOrder.add(order);
                 }
@@ -56,19 +60,27 @@ public class OrderRepository {
         }
         return 0;
     }
-    public List<Order> getOrdersByPartnerId(String partnerId){
+    public List<String> getOrdersByPartnerId(String partnerId){
         List<Order> list = new ArrayList<>();
+        List<String> ans = new ArrayList<>();
         if(orderPartnerPair.containsKey(partnerId)){
             list = orderPartnerPair.get(partnerId);
         }
-        return list;
+        for(Order order : list){
+            ans.add(order.toString());
+        }
+        return ans;
     }
-    public List<Order> getAllOrders(){
+    public List<String> getAllOrders(){
         List<Order> orders = new ArrayList<>();
+        List<String> ans = new ArrayList<>();
         for(String id : orderMap.keySet()){
             orders.add(orderMap.get(id));
         }
-        return orders;
+        for(Order order : orders){
+            ans.add(order.toString());
+        }
+        return ans;
     }
     public int getCountOfUnassignedOrders(){
         return orderMap.size() - assignedOrder.size();
