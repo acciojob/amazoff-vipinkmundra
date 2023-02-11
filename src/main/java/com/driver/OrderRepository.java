@@ -21,11 +21,19 @@ public class OrderRepository {
         deliveryPartnerMap.put(partnerId,deliveryPartner);
     }
     public void addOrderPartnerPair(String orderId,String partnerId){
-        if(orderMap.containsKey(orderId)){
+        if(orderMap.containsKey(orderId) && deliveryPartnerMap.containsKey(partnerId)){
             Order order = orderMap.get(orderId);
             if(!assignedOrder.contains(order)){
                 if(orderPartnerPair.containsKey(partnerId)){
                     List<Order> list = orderPartnerPair.get(partnerId);
+                    list.add(order);
+                    DeliveryPartner dp = deliveryPartnerMap.get(partnerId);
+                    dp.setNumberOfOrders(list.size());
+                    deliveryPartnerMap.put(partnerId,dp);
+                    orderPartnerPair.put(partnerId,list);
+                    assignedOrder.add(order);
+                }else{
+                    List<Order> list = new ArrayList<>();
                     list.add(order);
                     DeliveryPartner dp = deliveryPartnerMap.get(partnerId);
                     dp.setNumberOfOrders(list.size());
