@@ -26,15 +26,7 @@ public class OrderRepository {
             if(!assignedOrder.contains(order)){
                 if(orderPartnerPair.containsKey(partnerId)){
                     List<Order> list = orderPartnerPair.get(partnerId);
-                    list.add(orderMap.get(orderId));
-                    DeliveryPartner dp = deliveryPartnerMap.get(partnerId);
-                    dp.setNumberOfOrders(list.size());
-                    deliveryPartnerMap.put(partnerId,dp);
-                    orderPartnerPair.put(partnerId,list);
-                    assignedOrder.add(order);
-                }else{
-                    List<Order> list = new ArrayList<>();
-                    list.add(orderMap.get(orderId));
+                    list.add(order);
                     DeliveryPartner dp = deliveryPartnerMap.get(partnerId);
                     dp.setNumberOfOrders(list.size());
                     deliveryPartnerMap.put(partnerId,dp);
