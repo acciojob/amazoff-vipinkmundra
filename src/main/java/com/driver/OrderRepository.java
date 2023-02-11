@@ -128,8 +128,10 @@ public class OrderRepository {
     public String getLastDeliveryTimeByPartnerId(String partnerId){
         HashSet<Order> hs = orderPartnerPair.get(partnerId);
         List<Order> orders = new ArrayList<>(hs);
-        Order order = orders.get(orders.size()-1);
-        int time = order.getDeliveryTime();
+        int time = 0;
+        for(Order order : orders){
+            time = Math.max(time,order.getDeliveryTime());
+        }
         int MM = time%60;
         int HH = (time-MM)/60;
         String string1 = String.valueOf(MM);
@@ -143,8 +145,4 @@ public class OrderRepository {
         String orderTime = string1+":"+string2;
         return orderTime;
     }
-
-
-
-
 }
