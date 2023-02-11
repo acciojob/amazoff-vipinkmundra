@@ -68,21 +68,14 @@ public class OrderRepository {
         if(orderPartnerPair.containsKey(partnerId)){
             list = orderPartnerPair.get(partnerId);
             for(Order order : list){
-                ans.add(order.toString());
+                ans.add(order.getId());
             }
         }
         return ans;
     }
     public List<String> getAllOrders(){
-        List<Order> orders = new ArrayList<>();
-        List<String> ans = new ArrayList<>();
-        for(String id : orderMap.keySet()){
-            orders.add(orderMap.get(id));
-        }
-        for(Order order : orders){
-            ans.add(order.toString());
-        }
-        return ans;
+        return new ArrayList<>(orderMap.keySet());
+
     }
     public Integer getCountOfUnassignedOrders(){
         if(orderMap.size() == 0){
@@ -139,7 +132,15 @@ public class OrderRepository {
         int time = order.getDeliveryTime();
         int MM = time%60;
         int HH = (time-MM)/60;
-        String orderTime = String.valueOf(HH)+":"+String.valueOf(MM);
+        String string1 = String.valueOf(MM);
+        String string2 = String.valueOf(HH);
+        if(string1.length() == 1){
+            string1 = "0"+string1;
+        }
+        if(string2.length() == 1){
+            string2 = "0"+string2;
+        }
+        String orderTime = string1+":"+string2;
         return orderTime;
     }
 
